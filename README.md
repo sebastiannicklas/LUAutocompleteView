@@ -104,7 +104,7 @@ autocompleteView.delegate = self
 // MARK: - LUAutocompleteViewDataSource
 
 extension ViewController: LUAutocompleteViewDataSource {
-    func autocompleteView(_ autocompleteView: LUAutocompleteView, elementsFor text: String, completion: @escaping ([String]) -> Void) {
+    func autocompleteView(_ autocompleteView: LUAutocompleteView, elementsFor text: String, completion: @escaping ([LUAutocompletable]) -> Void) {
         let elementsThatMatchInput = elements.filter { $0.lowercased().contains(text.lowercased()) }
         completion(elementsThatMatchInput)
     }
@@ -113,8 +113,8 @@ extension ViewController: LUAutocompleteViewDataSource {
 // MARK: - LUAutocompleteViewDelegate
 
 extension ViewController: LUAutocompleteViewDelegate {
-    func autocompleteView(_ autocompleteView: LUAutocompleteView, didSelect text: String) {
-        print(text + " was selected from autocomplete view")
+    func autocompleteView(_ autocompleteView: LUAutocompleteView, didSelect object: LUAutocompletable) {
+        print(object.textForField() + " was selected from autocomplete view")
     }
 }
 ````
@@ -131,8 +131,8 @@ import LUAutocompleteView
 final class CustomAutocompleteTableViewCell: LUAutocompleteTableViewCell {
     // MARK: - Base Class Overrides
 
-    override func set(text: String) {
-        textLabel?.text = text
+    override func set(object: LUAutocompletable) {
+        textLabel?.text = object.textForField()
         textLabel?.textColor = .red
     }
 }
