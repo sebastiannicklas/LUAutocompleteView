@@ -16,6 +16,9 @@ final class ViewController: UIViewController {
     private let autocompleteView = LUAutocompleteView()
 
     private let elements = (1...100).map { "\($0)" }
+    let stuff: [Bla] = {
+         return (1...100).map { Bla.init(name: "\($0)name", blaId: $0) }
+    }()
 
     // MARK: - ViewController
 
@@ -38,8 +41,8 @@ final class ViewController: UIViewController {
 // MARK: - LUAutocompleteViewDataSource
 
 extension ViewController: LUAutocompleteViewDataSource {
-    func autocompleteView(_ autocompleteView: LUAutocompleteView, elementsFor text: String, completion: @escaping ([String]) -> Void) {
-        let elementsThatMatchInput = elements.filter { $0.lowercased().contains(text.lowercased()) }
+    func autocompleteView(_ autocompleteView: LUAutocompleteView, elementsFor text: String, completion: @escaping ([LUAutocompletable]) -> Void) {
+        let elementsThatMatchInput = stuff.filter { $0.name.lowercased().contains(text.lowercased()) }
         completion(elementsThatMatchInput)
     }
 }
@@ -47,7 +50,25 @@ extension ViewController: LUAutocompleteViewDataSource {
 // MARK: - LUAutocompleteViewDelegate
 
 extension ViewController: LUAutocompleteViewDelegate {
-    func autocompleteView(_ autocompleteView: LUAutocompleteView, didSelect text: String) {
-        print(text + " was selected from autocomplete view")
+    func autocompleteView(_ autocompleteView: LUAutocompleteView, didSelect object: LUAutocompletable) {
+        print(object.textForField() + " was selected from autocomplete view")
+        if let myBla = object as? Bla {
+            print("bla with ID: \(myBla.blaID)")
+        }
+    }
+}
+
+class Bla: LUAutocompletable {
+    
+    var name: String
+    var blaID: Int
+    
+    init(name: String, blaId: Int) {
+        self.name = name
+        self.blaID = blaId
+    }
+    
+    func textForField() -> String {
+        return name
     }
 }
