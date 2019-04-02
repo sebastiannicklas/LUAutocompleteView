@@ -10,7 +10,9 @@ Pod::Spec.new do |s|
   s.author       = { "Laurentiu Ungur" => "laurentyu1995@gmail.com" }
   
   s.requires_arc = true
-  s.platform     = :ios, "9.0"
+  s.platform     = :ios, "12.0"
+  s.swift_version = '5.0'
+
   
   s.source_files   = "Sources/*.{swift}"
   s.preserve_paths = "README*"
