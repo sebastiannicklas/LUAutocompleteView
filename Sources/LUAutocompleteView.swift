@@ -24,6 +24,9 @@ open class LUAutocompleteView: UIView {
     public var maximumHeight: CGFloat = 200.0
     /// A boolean value that determines whether the view should hide after a suggestion is selected. Default value is `true`.
     public var shouldHideAfterSelecting = true
+    /// The duration of the expand/collapse animation
+    public var animationDuration = 0.2
+    
     /** The attributes for the text suggestions.
      
     - Note: This property will be ignored if `autocompleteCell` is not `nil`.
@@ -88,7 +91,7 @@ open class LUAutocompleteView: UIView {
             }
 
             superview.layoutIfNeeded()
-            UIView.animate(withDuration: 0.2) {
+            UIView.animate(withDuration: animationDuration) {
                 self.heightConstraint?.constant = (self.height > self.maximumHeight) ? self.maximumHeight : self.height
                 superview.layoutIfNeeded()
             }
