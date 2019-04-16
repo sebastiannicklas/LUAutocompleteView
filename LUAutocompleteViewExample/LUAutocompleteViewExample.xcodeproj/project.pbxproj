@@ -132,7 +132,7 @@
 			};
 			buildConfigurationList = CF2B734A1EAE8A7E009056D2 /* Build configuration list for PBXProject "LUAutocompleteViewExample" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				English,

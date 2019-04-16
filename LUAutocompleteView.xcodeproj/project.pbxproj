@@ -107,18 +107,19 @@
 				TargetAttributes = {
 					CF2B732D1EAE889C009056D2 = {
 						CreatedOnToolsVersion = 8.3.2;
-						LastSwiftMigration = 0830;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
 				};
 			};
 			buildConfigurationList = CF2B73281EAE889C009056D2 /* Build configuration list for PBXProject "LUAutocompleteView" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				English,
 				en,
+				Base,
 			);
 			mainGroup = CF2B73241EAE889C009056D2;
 			productRefGroup = CF2B732F1EAE889C009056D2 /* Products */;

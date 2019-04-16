@@ -1,5 +1,5 @@
 PODS:
-  - LUAutocompleteView (3.0.0)
+  - LUAutocompleteView (4.0.0)
 
 DEPENDENCIES:
   - LUAutocompleteView (from `../`)
@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  LUAutocompleteView: 29f8762b4cec288346f9892fafadb3577f2a2a7e
+  LUAutocompleteView: abd0fe51052eea05cd77d37328a105b765f9ce4d
 
 PODFILE CHECKSUM: 879d74dffc2f7a7124018290c256a6e748f85285
 
