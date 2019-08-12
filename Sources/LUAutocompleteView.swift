@@ -24,6 +24,8 @@ open class LUAutocompleteView: UIView {
     public var maximumHeight: CGFloat = 200.0
     /// A boolean value that determines whether the view should hide after a suggestion is selected. Default value is `true`.
     public var shouldHideAfterSelecting = true
+    /// A boolean value that determines whether the selected element's text should be set into the textField. Default value is `true`.
+    public var fillTextFieldWithSelection = true
     /// The duration of the expand/collapse animation
     public var animationDuration = 0.2
     
@@ -267,7 +269,9 @@ extension LUAutocompleteView: UITableViewDelegate {
             height = 0
         }
         let object = elements[indexPath.row]
-        textField?.text = object.textForField()
+        if fillTextFieldWithSelection {
+            textField?.text = object.textForField()
+        }
         delegate?.autocompleteView(self, didSelect: object)
     }
 }
