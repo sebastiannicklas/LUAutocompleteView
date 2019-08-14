@@ -27,7 +27,18 @@ open class LUAutocompleteView: UIView {
     /// A boolean value that determines whether the selected element's text should be set into the textField. Default value is `true`.
     public var fillTextFieldWithSelection = true
     /// The duration of the expand/collapse animation
+    /// A boolean value that determines whether the view should show even when no text has been typed in. Default value is `false`.
+    public var showElementsWithEmptyText = false
+    /// The duration of the expand/collapse animation
     public var animationDuration = 0.2
+
+    public var bounces = true
+
+    public var tableHeaderView: UIView? {
+        didSet {
+            tableView.tableHeaderView = tableHeaderView
+        }
+    }
     
     /** The attributes for the text suggestions.
      
@@ -43,6 +54,7 @@ open class LUAutocompleteView: UIView {
 
             textField.addTarget(self, action: #selector(textFieldEditingChanged), for: .editingChanged)
             textField.addTarget(self, action: #selector(textFieldEditingEnded), for: .editingDidEnd)
+            textField.addTarget(self, action: #selector(textFieldEditingBegan), for: .editingDidBegin)
 
             setupConstraints()
         }
@@ -68,6 +80,10 @@ open class LUAutocompleteView: UIView {
         didSet {
             tableView.rowHeight = rowHeight
         }
+    }
+
+    public func scrollToTop() {
+        tableView.scrollRectToVisible(CGRect(x: 0, y: 0, width: 1, height: 1), animated: false)
     }
 
     // MARK: - Private Properties
@@ -140,7 +156,7 @@ open class LUAutocompleteView: UIView {
         tableView.tableFooterView = UIView()
         tableView.separatorInset = .zero
         tableView.contentInset = .zero
-        tableView.bounces = false
+        tableView.bounces = bounces
     }
 
     private func setupConstraints() {
@@ -176,12 +192,19 @@ open class LUAutocompleteView: UIView {
         perform(#selector(getElements), with: nil, afterDelay: throttleTime)
     }
 
+    @objc private func textFieldEditingBegan() {
+        if showElementsWithEmptyText {
+            NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(getElements), object: nil)
+            perform(#selector(getElements), with: nil, afterDelay: throttleTime)
+        }
+    }
+
     @objc private func getElements() {
         guard let dataSource = dataSource else {
             return
         }
 
-        guard let text = textField?.text, !text.isEmpty else {
+        guard let text = textField?.text, !text.isEmpty || showElementsWithEmptyText else {
             elements.removeAll()
             return
         }
@@ -193,6 +216,7 @@ open class LUAutocompleteView: UIView {
 
     @objc private func textFieldEditingEnded() {
         height = 0
+        delegate?.autocompleteViewEditingEnded(self)
     }
 }
 
@@ -212,7 +236,7 @@ extension LUAutocompleteView: UITableViewDataSource {
     - Returns: The number of rows in `section`.
     */
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return !(textField?.text?.isEmpty ?? true) ? elements.count : 0
+        return elements.count
     }
 
     /** Asks the data source for a cell to insert in a particular location of the table view.
