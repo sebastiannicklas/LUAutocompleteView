@@ -26,7 +26,6 @@ open class LUAutocompleteView: UIView {
     public var shouldHideAfterSelecting = true
     /// A boolean value that determines whether the selected element's text should be set into the textField. Default value is `true`.
     public var fillTextFieldWithSelection = true
-    /// The duration of the expand/collapse animation
     /// A boolean value that determines whether the view should show even when no text has been typed in. Default value is `false`.
     public var showElementsWithEmptyText = false
     /// The duration of the expand/collapse animation
